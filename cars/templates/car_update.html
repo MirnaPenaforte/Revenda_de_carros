@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* 1. Container Centralizado (Card Branco) */
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container h2 {
+        text-align: center;
+        color: #494848;
+        margin-bottom: 30px;
+        font-size: 24px;
+    }
+
+    /* 2. Estilização dos Campos (Django as_p) */
+    .form-container p {
+        margin-bottom: 20px;
+        color: #555;
+    }
+
+    /* Labels */
+    .form-container label {
+        display: block; /* Força a label a ficar em cima do input */
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #494848;
+    }
+
+    /* Inputs, Selects e Textareas */
+    .form-container input[type="text"],
+    .form-container input[type="number"],
+    .form-container input[type="email"],
+    .form-container input[type="password"],
+    .form-container select,
+    .form-container textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box; /* Garante que o padding não estoure a largura */
+        transition: border-color 0.3s;
+    }
+
+    .form-container input:focus, 
+    .form-container select:focus, 
+    .form-container textarea:focus {
+        border-color: #32bbe8;
+        outline: none;
+        box-shadow: 0 0 5px rgba(50, 187, 232, 0.2);
+    }
+
+    /* Estilo especial para o campo de upload de arquivo atual do Django */
+    .form-container a {
+        color: #32bbe8;
+        text-decoration: none;
+    }
+
+    /* 3. Área dos Botões */
+    .buttons-container {
+        display: flex;
+        gap: 15px; /* Espaço entre os botões */
+        margin-top: 30px;
+    }
+
+    .btn {
+        flex: 1; /* Faz os botões terem o mesmo tamanho */
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s;
+        text-decoration: none; /* Remove sublinhado do link cancelar */
+        display: inline-block;
+    }
+
+    /* Botão Salvar (Azul) */
+    .btn-save {
+        background-color: #32bbe8;
+        color: white;
+    }
+
+    .btn-save:hover {
+        background-color: #108eb8;
+    }
+
+    /* Botão Cancelar (Cinza) */
+    .btn-cancel {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-cancel:hover {
+        background-color: #5a6268;
+    }
+
+    /* Help text (textos de ajuda do Django) */
+    .helptext {
+        font-size: 12px;
+        color: #888;
+        display: block;
+        margin-top: 5px;
+    }
+
+</style>
+
+<div class="form-container">
+    <h2>Editar Carro</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+    
+        {{ form.as_p }}
+
+        <div class="buttons-container">
+            <button type="submit" class="btn btn-save">Salvar Alterações</button>
+            
+            <a href="{% url 'cars_list' %}" class="btn btn-cancel">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
