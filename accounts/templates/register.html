@@ -1,41 +1,137 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    /* 1. Container Centralizado */
+    .register-container {
+        max-width: 500px; /* Um pouco mais largo que o login */
+        margin: 50px auto;
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .register-container h2 {
+        text-align: center;
+        color: #494848;
+        margin-bottom: 30px;
+    }
+
+    /* 2. Grupos de Formulário */
+    .form-group {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #555;
+        font-size: 14px;
+    }
+
+    /* 3. Estilização dos Inputs (Texto e Senha) */
+    /* O seletor abaixo pega qualquer input dentro do .form-group */
+    .form-group input { 
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 100%; /* Garante que o input encha o espaço */
+        box-sizing: border-box; /* Garante que o padding não estoure a largura */
+        transition: border-color 0.3s;
+    }
+
+    .form-group input:focus {
+        border-color: #32bbe8;
+        outline: none;
+        box-shadow: 0 0 5px rgba(50, 187, 232, 0.2);
+    }
+
+    /* 4. Tratamento de Erros */
+    .error-msg {
+        color: #d9534f;
+        font-size: 13px;
+        margin-bottom: 5px;
+        list-style: none;
+        padding: 0;
+    }
+
+    /* 5. Botão de Cadastro */
+    .btn-register {
+        width: 100%;
+        background-color: #38393a;
+        color: white;
+        padding: 14px;
+        border: none;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 10px;
+    }
+
+    .btn-register:hover {
+        background-color: #696c6e;
+    }
+
+    /* Link para voltar ao login */
+    .register-footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    .register-footer a {
+        color: #32bbe8;
+        text-decoration: none;
+        font-weight: bold;
+    }
+</style>
+
+<div class="register-container">
+    <h2>Crie sua Conta</h2>
 
     <form method="post">
-    {% csrf_token%}
+        {% csrf_token %}
 
-    <div class="form-group">
-        {{user_form.username.errors}}
-        <label>Usuário: </label>
-        {{user_form.username}}
+        <div class="form-group">
+            {% if user_form.username.errors %}
+                <div class="error-msg">{{ user_form.username.errors }}</div>
+            {% endif %}
+            <label for="{{ user_form.username.id_for_label }}">Usuário:</label>
+            {{ user_form.username }}
+        </div>
 
-    </div>
+        <div class="form-group">
+            {% if user_form.password1.errors %}
+                <div class="error-msg">{{ user_form.password1.errors }}</div>
+            {% endif %}
+            <label for="{{ user_form.password1.id_for_label }}">Senha:</label>
+            {{ user_form.password1 }}
+        </div>
 
-    <div class="form-group">
-        {{user_form.password1.errors}}
-        <label>Senha: </label>
-        {{user_form.password1}}
+        <div class="form-group">
+            {% if user_form.password2.errors %}
+                <div class="error-msg">{{ user_form.password2.errors }}</div>
+            {% endif %}
+            <label for="{{ user_form.password2.id_for_label }}">Confirmação de senha:</label>
+            {{ user_form.password2 }}
+        </div>
 
-    </div>
-
-    <div class="form-group">
-        {{user_form.password2.errors}}
-        <label>Confirmação de senha: </label>
-        {{user_form.password2}}
-
-    </div>
-
-    <div class="form-group">
-        <input type="submit" value="cadastrar">
-        
-    </div>
-
-
-
-
+        <div class="form-group">
+            <input type="submit" value="Cadastrar" class="btn-register">
+        </div>
     </form>
 
+    <div class="register-footer">
+        <p>Já possui uma conta? <a href="{% url 'login' %}">Faça login</a></p>
+    </div>
 
+</div>
 
-{%endblock%}
+{% endblock %}

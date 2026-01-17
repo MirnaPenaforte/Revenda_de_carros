@@ -1,37 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{% endblock %}</title>
   <style>
+    /* 1. Padronização Geral e Sticky Footer */
     body {
         font-family: 'Open Sans', sans-serif;
         background-color: #f7f7f7;
         color: #333;
         margin: 0;
         padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Faz o corpo ocupar a tela toda */
+    }
+
+    /* 2. Container de Margem Padronizada */
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto; /* Centraliza o conteúdo e cria margens iguais */
     }
 
     header {
-        background-color: #0096c7;
+        background-color: #494848;
         color: #fff;
-        text-align: center;
     }
 
-    footer {
-        background-color: #ccc;
-        color: #333;
-        padding: 20px;
-        text-align: center;
-    }
-
+    /* 3. Ajustes na Navegação */
     nav {
-        background-color: #0096c7;
-        color: #fff;
-        height: 50px;
+        height: 60px;
         display: flex;
-        justify-content: space-between;
         align-items: center;
     }
 
@@ -40,17 +41,26 @@
         margin: 0;
         padding: 0;
         display: flex;
+        width: 100%; /* Ocupa toda a largura do container */
+        align-items: center;
     }
 
     nav ul li {
-        margin: 0 10px;
+        margin-right: 20px;
+    }
+
+    /* Mover o botão Sair para o canto direito (final) */
+    nav ul li.logout-item {
+        margin-left: auto; /* Empurra o item para o final da lista */
+        margin-right: 0;
     }
 
     nav ul li a {
         color: #fff;
         text-decoration: none;
         font-size: 16px;
-        padding: 15px;
+        padding: 10px 15px;
+        border-radius: 4px;
         transition: all 0.3s ease;
     }
 
@@ -58,51 +68,58 @@
         background-color: #32bbe8;
     }
 
-    nav ul li.active a {
-        background-color: #666;
+    /* 4. Conteúdo Principal */
+    main {
+        flex: 1; /* Empurra o footer para baixo se houver pouco conteúdo */
+        padding: 40px 0;
     }
 
-    nav ul li.active a:hover {
-        background-color: #999;
+    /* 5. Footer Padronizado */
+    footer {
+        background-color: #494848;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+        width: 100%;
+    }
+
+    /* Estilo para o texto de boas-vindas */
+    .user-welcome {
+        font-weight: bold;
+        color: #32bbe8;
     }
 
   </style>
 </head>
 <body>
   <header>
-    <nav>
-      <ul>
-        {%if user.is_authenticated  %}
-          <li>Olá, {{user.username}}</li> 
-          <li><a href="{% url 'new_car' %}">Cadastrar novo Carro</a></li>
-        {%endif%}
+    <div class="container">
+      <nav>
+        <ul>
           
-        {%if not user.is_authenticated  %}
-          
-          <li><a href="{% url 'register'%}">Cadastre-se</a></li>
-          <li><a href="{% url 'login'%}">Entrar</a></li>
-          
-        {%endif%}
-          
-        <li><a href="{% url 'cars_list' %}">Carros</a></li>
-        
-        
-        {%if user.is_authenticated  %}
-          
-          <li><a href="{% url 'logout'%}">Sair</a></li>
-  
-        {%endif%}
-      </ul>
-    </nav>
+          {% if user.is_authenticated %}
+          <li class="user-welcome">Olá, {{ user.username }}</li> 
+          <li><a href="{% url 'cars_list' %}">Carros</a></li>
+          <li><a href="{% url 'new_car' %}">Cadastrar Carro</a></li>
+          <li class="logout-item"><a href="{% url 'logout' %}">Sair</a></li>
+          {% else %}
+            <li class="logout-item"><a href="{% url 'register' %}">Cadastre-se</a></li>
+            <li><a href="{% url 'login' %}">Entrar</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <main>
+  <main class="container">
     {% block content %}
     {% endblock %}
   </main>
 
   <footer>
-    <p>&copy; 2025 Mirna Penaforte.Dev</p>
+    <div class="container">
+      <p>&copy; 2025 Mirna Penaforte Softwer Developer</p>
+    </div>
   </footer>
 </body>
 </html>
