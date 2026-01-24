@@ -19,7 +19,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from cars.views import CarsView
-from cars.views import NewCarView, CarDetailView, CarUpdateView
+from cars.views import NewCarView, CarDetailView, CarUpdateView, CarDeleteView
 from accounts.views import register_view, login_view, logout_view
 
 urlpatterns = [
@@ -31,4 +31,5 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('car/<int:pk>/', CarDetailView.as_view(), name="car_detail"),
     path('car/<int:pk>/update/', CarUpdateView.as_view(), name="car_update"),
+    path('car/<int:pk>/delete/', CarDeleteView.as_view(), name="car_delete")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
