@@ -33,12 +33,12 @@ class CarModelForm (forms.ModelForm):
 
     def clean_value(self):
         value = self.cleaned_data.get('value')
-        if value < 20000:
-            self.add_error('value', 'Valor minimo do carro deve ser R$20.000')
+        if value < 10000:
+            self.add_error('value', 'Valor minimo do carro deve ser R$10.000')
         return value
     
     def clean_model_year(self):
         model_year = self.cleaned_data.get('model_year')
-        if model_year < 2000:
-            self.add_error('mode_year', 'O ano do carro deve ser acima de 2000')
+        if model_year < 1970:
+            self.add_error('model_year', 'O ano do carro deve ser acima de 1970')
         return model_year
