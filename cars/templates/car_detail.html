@@ -57,6 +57,19 @@
         color: #333;
     }
 
+    .info-bio{
+        font-size: 1.1rem;
+        color: #555;
+        margin-bottom: 12px;
+        border-bottom: 1px solid #f0f0f0; /* Linha sutil para separar itens */
+        padding-bottom: 8px;
+        display: flex;
+        justify-content: space-between
+        
+
+
+    }
+
     .price-tag {
         font-size: 1.5rem;
         color: #32bbe8; /* Azul padrão */
@@ -154,7 +167,17 @@
             <span>{{ object.plate }}</span>
         </div>
 
+        {%if object.bio%}
+
+        <div class="info-bio">
+            <strong>Descrição:</strong> 
+            <span>{{ object.bio }}</span>
+        </div>
+
+        {%endif%}
+
         <span class="price-tag">R$ {{ object.value }}</span>
+
     </div>
 
     <div class="buttons-container">
